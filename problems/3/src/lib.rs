@@ -6,14 +6,14 @@ impl Solution {
         let mut next = &s as &str;
         let mut longest_count = 0;
         loop {
-            let (res, after) = Solution::nondupe_substr(next);
+            let (res, _after) = Solution::nondupe_substr(next);
             if res.len() > longest_count {
                 longest_count = res.len();
             }
             if next.len() == 0 {
                 break;
             }
-            next = &(*after);
+            next = &next[1..];
         }
         return longest_count as i32;
     }
