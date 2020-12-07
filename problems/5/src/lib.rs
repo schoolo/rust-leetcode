@@ -5,7 +5,7 @@ impl Solution {
             return s;
         }
 
-        for len in (1..s.len()).rev() {
+        for len in (1..=s.len()).rev() {
             let subs = Solution::substrings_of_length(&s, len);
             for sub in subs {
                 if Solution::is_palindrome(sub) {
@@ -72,6 +72,7 @@ mod tests {
     #[test]
     fn test_is_palindrome() {
         assert_eq!(true, Solution::is_palindrome(&"a"));
+        assert_eq!(true, Solution::is_palindrome(&"bb"));
         assert_eq!(true, Solution::is_palindrome(&"aba"));
         assert_eq!(true, Solution::is_palindrome(&"abaaba"));
         assert_eq!(false, Solution::is_palindrome(&"ab"));
@@ -84,6 +85,10 @@ mod tests {
     #[test]
     fn test_longest_palindrome_single_char() {
         assert_eq!(&"a", &Solution::longest_palindrome("a".to_string()));
+    }
+    #[test]
+    fn test_longest_palindrome_double_char() {
+        assert_eq!(&"bb", &Solution::longest_palindrome("bb".to_string()));
     }
     #[test]
     fn test_longest_palindrome_multiple_chars() {
