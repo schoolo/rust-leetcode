@@ -47,7 +47,6 @@ impl Solution {
                         break;
                     }
                     if fc != bc {
-                        println!("no match {},{}", fc, bc);
                         return false;
                     }
                 }
