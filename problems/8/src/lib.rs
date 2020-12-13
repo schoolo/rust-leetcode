@@ -16,25 +16,35 @@ impl Solution {
         }
     }
 
-    fn atoi(s: &str) -> i32 {
+    fn atoi(s: &str, mul: i32) -> i32 {
         let mut res: i32 = 0;
+        let max = if mul == 1 { i32::MAX } else { i32::MIN };
         for c in s.chars() {
             match c {
                 '0'..='9' => {
-                    res *= 10;
-                    res += c.to_digit(10).unwrap() as i32;
+                    let mut maybe_res = res.checked_mul(10);
+                    match maybe_res {
+                        Some(x) => {
+                            maybe_res = x.checked_add(c.to_digit(10).unwrap() as i32);
+                            match maybe_res {
+                                Some(x) => res = x,
+                                None => return max,
+                            }
+                        }
+                        None => return max,
+                    }
                 }
                 _ => break,
             }
         }
 
-        res
+        res * mul
     }
 
     pub fn my_atoi(s: String) -> i32 {
         let (mul, num) = Solution::get_multiplier(Solution::strip(&s));
 
-        Solution::atoi(num) * mul
+        Solution::atoi(num, mul)
     }
 }
 
@@ -77,5 +87,9 @@ mod tests {
     #[test]
     fn test_number_then_not() {
         assert_eq!(2343, Solution::my_atoi(" 2343@#$#@".to_string()));
+    }
+    #[test]
+    fn test_negative_overflow() {
+        assert_eq!(-2147483648, Solution::my_atoi("-91283472332".to_string()))
     }
 }
