@@ -18,7 +18,11 @@ impl Solution {
 
     fn atoi(s: &str, mul: i32) -> i32 {
         let mut res: i32 = 0;
-        let max = if mul == 1 { i32::MAX } else { i32::MIN };
+        let max = if mul == 1 {
+            i32::max_value()
+        } else {
+            i32::min_value()
+        };
         for c in s.chars() {
             match c {
                 '0'..='9' => {
