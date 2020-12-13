@@ -1,11 +1,14 @@
 enum State {
     Zig,
-    Zag
+    Zag,
 }
 
 struct Solution {}
 impl Solution {
     pub fn convert(s: String, num_rows: i32) -> String {
+        if num_rows == 1 {
+            return s;
+        }
         let mut row: i32 = 0;
 
         let mut state = State::Zig;
@@ -42,6 +45,9 @@ mod tests {
     use super::*;
     #[test]
     fn it_works() {
-        assert_eq!(Solution::convert("PAYPALISHIRING".to_string(), 3), "PAHNAPLSIIGYIR".to_string());
+        assert_eq!(
+            Solution::convert("PAYPALISHIRING".to_string(), 3),
+            "PAHNAPLSIIGYIR".to_string()
+        );
     }
 }
